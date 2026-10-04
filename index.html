@@ -3,171 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HƯỚNG DẪN ROP TRÊN CASIO fx-580VN X - DARK MODE</title>
+    <title>HƯỚNG DẪN ROP TRÊN CASIO fx-580VN X - EASY READ DARK</title>
     <style>
         :root {
-            --primary-color: #00ffcc;
-            --secondary-color: #ff007f;
-            --accent-color: #00d2ff;
-            --bg-color: #0d0e15;
-            --card-bg: #161824;
-            --text-color: #e0e6ed;
-            --text-muted: #94a3b8;
-            --border-color: #2a2d3d;
-            --code-bg: #090a0f;
-            --code-color: #38bdf8;
-            --table-header: #1e2235;
+            --primary-color: #50fa7b;      /* Soft Green Neon */
+            --secondary-color: #ff79c6;    /* Soft Pink */
+            --accent-color: #8be9fd;       /* Soft Cyan */
+            --bg-color: #1a1c23;          /* Comfortable Dark Grey */
+            --card-bg: #21252b;          /* Slightly lighter card background */
+            --text-color: #f8f8f2;        /* High Contrast White */
+            --text-muted: #abb2bf;       /* Muted Grey */
+            --border-color: #3e4451;      /* Clear Border */
+            --code-bg: #181a1f;          /* Code block dark */
+            --code-color: #61afef;        /* Bright Soft Blue for code */
+            --table-header: #2c313a;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
+            line-height: 1.8;
             color: var(--text-color);
             background-color: var(--bg-color);
             margin: 0;
-            padding: 20px;
+            padding: 24px;
+            font-size: 17px; /* Increased base font size for clarity */
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 960px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 40px;
+            padding: 45px;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid var(--border-color);
         }
 
         header {
             text-align: center;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
         }
 
         h1 {
             color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 2.2em;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            margin-bottom: 12px;
+            font-size: 2.3em;
             letter-spacing: 0.5px;
         }
 
         .author {
             font-style: italic;
             color: var(--secondary-color);
-            font-size: 1.1em;
-            font-weight: bold;
+            font-size: 1.15em;
+            font-weight: 600;
         }
 
         .doc-desc {
-            background-color: rgba(0, 210, 255, 0.05);
-            border-left: 4px solid var(--accent-color);
-            padding: 15px;
-            margin: 20px 0;
+            background-color: rgba(139, 233, 253, 0.08);
+            border-left: 5px solid var(--accent-color);
+            padding: 18px 22px;
+            margin: 25px 0;
             border-radius: 0 8px 8px 0;
-            color: #b0c4de;
+            color: #d7dae0;
+            font-size: 1.05em;
         }
 
         h2 {
             color: var(--primary-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            margin-top: 40px;
-            font-size: 1.6em;
-            text-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 45px;
+            font-size: 1.7em;
         }
 
         h3 {
             color: var(--accent-color);
-            margin-top: 25px;
-            font-size: 1.3em;
+            margin-top: 30px;
+            font-size: 1.35em;
         }
 
         h4 {
             color: var(--secondary-color);
-            margin-top: 15px;
-            font-size: 1.1em;
+            margin-top: 20px;
+            font-size: 1.15em;
         }
 
         code, pre {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-family: "Fira Code", Consolas, "Courier New", monospace;
         }
 
         pre {
             background-color: var(--code-bg);
             color: var(--code-color);
-            padding: 18px;
+            padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
-            font-size: 0.9em;
-            line-height: 1.5;
-            border: 1px solid #1f2335;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            font-size: 0.95em;
+            line-height: 1.6;
+            border: 1px solid #282c34;
         }
 
         code {
-            background-color: #1a1d2d;
+            background-color: #282c34;
             color: #ff79c6;
-            padding: 3px 8px;
+            padding: 4px 8px;
             border-radius: 4px;
             font-size: 0.9em;
-            border: 1px solid #2a2e45;
         }
 
         pre code {
             background-color: transparent;
             color: inherit;
             padding: 0;
-            border: none;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #121420;
+            margin: 25px 0;
+            background-color: #1b1d23;
         }
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 10px 12px;
+            padding: 12px 15px;
             text-align: left;
         }
 
         th {
             background-color: var(--table-header);
             color: var(--primary-color);
+            font-size: 1.05em;
         }
 
         tr:nth-child(even) {
-            background-color: #181a28;
+            background-color: #21252b;
         }
 
         ul, ol {
-            padding-left: 25px;
+            padding-left: 28px;
         }
 
         li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .tree-structure {
             background-color: var(--code-bg);
             border: 1px solid var(--border-color);
-            padding: 15px;
+            padding: 18px;
             border-radius: 8px;
             font-family: monospace;
             white-space: pre;
             overflow-x: auto;
-            color: #a9b1d6;
+            color: #e5c07b;
+            font-size: 0.95em;
         }
 
         .toc {
-            background-color: #121420;
+            background-color: #1b1d23;
             border: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
             margin: 30px 0;
         }
@@ -184,7 +182,7 @@
         .toc a {
             color: var(--accent-color);
             text-decoration: none;
-            transition: color 0.2s;
+            font-weight: 500;
         }
 
         .toc a:hover {
@@ -193,30 +191,29 @@
         }
 
         .note {
-            background-color: rgba(255, 184, 108, 0.08);
-            border-left: 4px solid #ffb86c;
-            padding: 12px;
-            margin: 15px 0;
+            background-color: rgba(229, 192, 123, 0.1);
+            border-left: 5px solid #e5c07b;
+            padding: 15px 20px;
+            margin: 20px 0;
             border-radius: 0 8px 8px 0;
-            color: #ffeaa7;
+            color: #f7e0a3;
         }
 
         .function-block {
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            background-color: #121420;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            padding: 24px;
+            margin: 25px 0;
+            background-color: #1b1d23;
         }
 
         footer {
             margin-top: 50px;
-            padding-top: 20px;
+            padding-top: 25px;
             border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
     </style>
 </head>
@@ -1347,7 +1344,6 @@ adr_of [-2] else
     </ol>
 
     <!-- PHẦN 6 -->
-    <h6 id="phan6" style="display:none;">PHẦN 6: KẾT THÚC</h6>
     <h2>PHẦN 6: KẾT THÚC</h2>
     <p>Những kiến thức về thanh ghi, bộ nhớ, các gadget và kỹ thuật xây dựng chương trình trong tài liệu này được đúc kết từ tài nguyên có sẵn, quá trình nghiên cứu, tham khảo tài liệu chính thống <em>"nX-U16/100 Core Cẩm nang hướng dẫn – Vi điều khiển CMOS 16‑bit"</em> của LAPIS Semiconductor, cùng những trải nghiệm thực tế từ cộng đồng.</p>
     <p>Hy vọng rằng những dòng chữ này sẽ là điểm khởi đầu vững chắc, giúp bạn tự tin tạo ra chương trình riêng trên chiếc máy tính Casio của mình.</p>

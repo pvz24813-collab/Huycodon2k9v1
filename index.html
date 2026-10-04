@@ -6,460 +6,1345 @@
     <title>HƯỚNG DẪN ROP TRÊN CASIO fx-580VN X</title>
     <style>
         :root {
-            --primary-color: #1e3c72;
-            --secondary-color: #2a5298;
-            --accent-color: #f39c12;
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #2980b9;
             --bg-color: #f8f9fa;
-            --text-color: #2c3e50;
-            --code-bg: #282c34;
-            --code-color: #abb2bf;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e9ecef;
+            --code-bg: #1e1e1e;
+            --code-color: #d4d4d4;
+            --table-header: #34495e;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.6;
             color: var(--text-color);
-            background-color: #eef2f7;
+            background-color: var(--bg-color);
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            background: #ffffff;
+            background: var(--card-bg);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: #ffffff;
-            padding: 30px 20px;
-            border-radius: 8px;
+        header {
             text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .header .author {
-            font-style: italic;
-            opacity: 0.9;
-            font-size: 14px;
-        }
-
-        .intro {
-            background-color: var(--bg-color);
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px 20px;
-            margin-bottom: 30px;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .toc {
-            background-color: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 20px 25px;
-            margin-bottom: 35px;
-        }
-
-        .toc h2 {
-            margin-top: 0;
-            font-size: 18px;
-            border-bottom: 2px solid #cbd5e1;
-            padding-bottom: 8px;
+        h1 {
             color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.2em;
         }
 
-        .toc ul {
-            padding-left: 20px;
-            margin-bottom: 0;
+        .author {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1em;
         }
 
-        .toc li {
-            margin-bottom: 6px;
-        }
-
-        .toc a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .toc a:hover {
-            text-decoration: underline;
+        .doc-desc {
+            background-color: #eef7fc;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
         }
 
         h2 {
             color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 6px;
-            margin-top: 35px;
-            font-size: 20px;
-            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            font-size: 1.6em;
         }
 
         h3 {
-            color: var(--text-color);
-            background-color: #eef2f7;
-            padding: 8px 12px;
-            border-left: 4px solid var(--secondary-color);
+            color: var(--secondary-color);
             margin-top: 25px;
-            font-size: 16px;
-            border-radius: 0 4px 4px 0;
+            font-size: 1.3em;
         }
 
         h4 {
-            color: #34495e;
-            margin-top: 20px;
-            font-size: 15px;
+            color: var(--accent-color);
+            margin-top: 15px;
+            font-size: 1.1em;
         }
 
-        code {
+        code, pre {
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-            background-color: #f0f3f6;
-            color: #c7254e;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 14px;
         }
 
         pre {
             background-color: var(--code-bg);
             color: var(--code-color);
-            padding: 15px 18px;
-            border-radius: 8px;
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-            font-size: 13.5px;
-            line-height: 1.5;
+            padding: 15px;
+            border-radius: 6px;
             overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            margin: 15px 0;
+            font-size: 0.9em;
+            line-height: 1.45;
+        }
+
+        code {
+            background-color: #f1f3f5;
+            color: #d63384;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-size: 14px;
         }
 
         th, td {
-            border: 1px solid #dcdfe6;
+            border: 1px solid var(--border-color);
             padding: 10px 12px;
             text-align: left;
         }
 
         th {
-            background-color: var(--secondary-color);
-            color: #ffffff;
-            font-weight: 600;
+            background-color: var(--table-header);
+            color: white;
         }
 
         tr:nth-child(even) {
-            background-color: var(--bg-color);
+            background-color: #f8f9fa;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .tree-structure {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .toc > ul {
+            padding-left: 0;
+        }
+
+        .toc a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
         }
 
         .note {
-            background-color: #fff8e6;
-            border-left: 4px solid var(--accent-color);
-            padding: 12px 15px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
             margin: 15px 0;
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 4px 4px 0;
         }
 
-        .important {
-            background-color: #fde8e8;
-            border-left: 4px solid #e74c3c;
-            padding: 12px 15px;
-            margin: 15px 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .footer {
-            background-color: #f1f5f9;
+        .function-block {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             padding: 20px;
-            border-radius: 8px;
-            margin-top: 40px;
-            border: 1px solid #cbd5e1;
-            font-size: 14px;
+            margin: 20px 0;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .container { padding: 20px; }
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-
-    <div class="header">
+    <header>
         <h1>HƯỚNG DẪN ROP TRÊN CASIO fx-580VN X</h1>
-        <div class="author">Biên soạn bởi @Bashamee</div>
+        <div class="author">(được biên soạn bởi @Bashamee)</div>
+    </header>
+
+    <div class="doc-desc">
+        Tài liệu này tổng hợp kiến thức cơ bản về vi điều khiển nX-U16/100 và các kỹ thuật ROP (Return-Oriented Programming) để lập trình cho máy tính Casio fx-580VN X.<br>
+        <strong>Nội dung được trình bày dưới dạng tham khảo.</strong>
     </div>
 
-    <div class="intro">
-        Tài liệu này tổng hợp kiến thức cơ bản về vi điều khiển nX-U16/100 và các kỹ thuật ROP (Return-Oriented Programming) để lập trình cho máy tính Casio fx-580VN X.
-    </div>
-
+    <!-- MỤC LỤC -->
     <div class="toc">
         <h2>MỤC LỤC</h2>
         <ul>
             <li><a href="#phan1">PHẦN 1: KIẾN THỨC CƠ BẢN</a>
                 <ul>
-                    <li>1.0 Hệ cơ số (dec, hex, bin)</li>
-                    <li>1.1 Các thanh ghi (Registers)</li>
-                    <li>1.2 Biểu diễn số hex</li>
-                    <li>1.3 Bộ nhớ</li>
-                    <li>1.4 Các lệnh cơ bản (Assembly)</li>
-                    <li>1.5 Ngăn xếp (Stack)</li>
+                    <li><a href="#p1-0">1.0. Hệ thập phân (dec), thập lục phân (hex) và nhị phân (bin)</a></li>
+                    <li><a href="#p1-1">1.1. Các thanh ghi (Registers)</a>
+                        <ul>
+                            <li><a href="#p1-1-1">1.1.1. Sơ đồ phân cấp thanh ghi</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#p1-2">1.2. Biểu diễn số hex</a></li>
+                    <li><a href="#p1-3">1.3. Bộ nhớ</a></li>
+                    <li><a href="#p1-4">1.4. Các lệnh cơ bản (assembly)</a></li>
+                    <li><a href="#p1-5">1.5. Ngăn xếp (stack)</a></li>
                 </ul>
             </li>
-            <li><a href="#phan2">PHẦN 2: DISASSEMBLY & GADGET</a>
+            <li><a href="#phan2">PHẦN 2: DISASSEMBLY, GADGET</a>
                 <ul>
-                    <li>2.1 Disassembly là gì?</li>
-                    <li>2.2 Gadget là gì?</li>
-                    <li>2.3 Cách gọi gadget</li>
-                    <li>2.4 Đọc file disassembly</li>
-                    <li>2.5 Quy ước gọi hàm</li>
-                    <li>2.6 Đọc và ghi RAM</li>
-                    <li>2.7 Lệnh nhảy B và BL</li>
-                    <li>2.8 Lệnh POP, POP PC, RT</li>
+                    <li><a href="#p2-1">2.1. Disassembly (disas) là gì?</a></li>
+                    <li><a href="#p2-2">2.2. Gadget là gì?</a></li>
+                    <li><a href="#p2-3">2.3. Cách gọi gadget trong code</a></li>
+                    <li><a href="#p2-4">2.4. Cách đọc file disassembly</a></li>
+                    <li><a href="#p2-5">2.5. Quy ước gọi hàm (calling convention)</a></li>
+                    <li><a href="#p2-6">2.6. Đọc và ghi vào RAM</a></li>
+                    <li><a href="#p2-7">2.7. Lệnh nhảy B và BL</a></li>
+                    <li><a href="#p2-8">2.8. Ba lệnh đặc biệt: POP, POP PC, RT</a></li>
                 </ul>
             </li>
             <li><a href="#phan3">PHẦN 3: CÁC HÀM PHỔ BIẾN</a>
                 <ul>
-                    <li>3.1 Hàm printline</li>
-                    <li>3.2 Hàm smallprint</li>
-                    <li>3.3 Hàm render_bitmap</li>
-                    <li>3.4 Hàm line_draw</li>
-                    <li>3.5 Hàm waitshift</li>
-                    <li>3.6 Hàm calc_func</li>
-                    <li>3.7 Hàm cmp_ea</li>
-                    <li>3.8 Các hàm đọc phím</li>
-                    <li>3.9 Hàm delay</li>
-                    <li>3.10 Các dạng so sánh</li>
+                    <li><a href="#p3-1">3.1. Hàm in chữ (printline)</a></li>
+                    <li><a href="#p3-2">3.2. Hàm in chữ font (smallprint)</a></li>
+                    <li><a href="#p3-3">3.3. Hàm vẽ bitmap (render_bitmap)</a></li>
+                    <li><a href="#p3-4">3.4. Hàm vẽ đường thẳng (line_draw)</a></li>
+                    <li><a href="#p3-5">3.5. Hàm chờ phím SHIFT (waitshift)</a></li>
+                    <li><a href="#p3-6">3.6. Hàm tính toán (calc_func)</a></li>
+                    <li><a href="#p3-7">3.7. Hàm so sánh bảng (cmp_ea) (quan trọng)</a></li>
+                    <li><a href="#p3-8">3.8. Các hàm đọc phím (getkey, getscancode, getscancode_nodelay)</a>
+                        <ul>
+                            <li><a href="#p3-8-1">3.8.1. getkey / getscancode_nodelay (không chờ)</a></li>
+                            <li><a href="#p3-8-2">3.8.2. getscancode (chờ)</a></li>
+                            <li><a href="#p3-8-3">3.8.3. Bảng keycode (KI/KO)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#p3-9">3.9. Hàm làm chậm (delay)</a></li>
+                    <li><a href="#p3-10">3.10. Các dạng so sánh (verify)</a></li>
                 </ul>
             </li>
-            <li><a href="#phan4">PHẦN 4: KỸ THUẬT ROP</a>
+            <li><a href="#phan4">PHẦN 4: KỸ THUẬT XÂY DỰNG CHƯƠNG TRÌNH ROP</a>
                 <ul>
-                    <li>4.1 Kỹ thuật vòng lặp (loop)</li>
-                    <li>4.2 Offset & Địa chỉ</li>
-                    <li>4.3 Tăng/Giảm giá trị & Scroll</li>
-                    <li>4.4 Ghi giá trị (set)</li>
-                    <li>4.5 Xử lý phím với cmp_ea</li>
-                    <li>4.6 Verify kết hợp cmp_ea</li>
+                    <li><a href="#p4-1">4.1. Kỹ thuật xây dựng vòng lặp (loop)</a>
+                        <ul>
+                            <li><a href="#p4-1-1">4.1.1. Loop – dùng QR0 và strcpy (phổ biến)</a></li>
+                            <li><a href="#p4-1-2">4.1.2. Loop ngắn – dùng memcpy_auto_jmp</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#p4-2">4.2. Offset – Cách tính địa chỉ chính xác</a></li>
+                    <li><a href="#p4-3">4.3. Tăng/Giảm giá trị của một địa chỉ</a>
+                        <ul>
+                            <li><a href="#p4-3-1">4.3.1. Scroll – Cuộn màn hình liên tục</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#p4-4">4.4. Ghi giá trị vào một địa chỉ (set)</a></li>
+                    <li><a href="#p4-5">4.5. Xử lý phím với getkey và cmp_ea</a></li>
+                    <li><a href="#p4-6">4.6. Các dạng so sánh (verify) kết hợp với cmp_ea</a></li>
                 </ul>
             </li>
             <li><a href="#phan5">PHẦN 5: CÁC LƯU Ý CẦN NHỚ</a></li>
-            <li><a href="#phan6">PHẦN 6: KẾT THÚC & LỜI CẢM ƠN</a></li>
+            <li><a href="#phan6">PHẦN 6: KẾT THÚC</a></li>
         </ul>
     </div>
 
+    <!-- PHẦN 1 -->
     <h2 id="phan1">PHẦN 1: KIẾN THỨC CƠ BẢN</h2>
-
-    <h3>1.0 Hệ thập phân (dec), thập lục phân (hex) và nhị phân (bin)</h3>
+    
+    <h3 id="p1-0">1.0 Hệ thập phân (dec), thập lục phân (hex) và nhị phân (bin)</h3>
     <ul>
-        <li><strong>Hệ thập phân (dec):</strong> Hệ cơ số 10, dùng các chữ số 0-9. Ví dụ: 123, 255.</li>
-        <li><strong>Hệ thập lục phân (hex):</strong> Hệ cơ số 16, dùng các chữ số 0-9 và A-F. Mỗi chữ số hex tương ứng 4 bit nhị phân. Trong tài liệu này, hex được viết dưới dạng hai byte liên tiếp theo thứ tự little-endian, hoặc kèm tiền tố 0x. Ví dụ: <code>hex 00 01 = 0x0100</code>, <code>hex 2e d7 = 0xd72e</code>.</li>
-        <li><strong>Hệ nhị phân (bin):</strong> Hệ cơ số 2, chỉ dùng 0 và 1.</li>
+        <li><strong>Hệ thập phân (dec):</strong> hệ cơ số 10, dùng các chữ số 0-9. Ví dụ: 123, 255.</li>
+        <li><strong>Hệ thập lục phân (hex):</strong> hệ cơ số 16, dùng các chữ số 0-9 và A-F. Mỗi chữ số hex tương ứng 4 bit nhị phân.<br>
+        Trong tài liệu này, hex được viết dưới dạng hai byte liên tiếp theo thứ tự little‑endian, hoặc kèm tiền tố <code>0x</code>.<br>
+        <em>Ví dụ:</em> hex <code>00 01</code> = <code>0x0100</code>, hex <code>2e d7</code> = <code>0xd72e</code>.</li>
+        <li><strong>Hệ nhị phân (bin):</strong> hệ cơ số 2, chỉ dùng 0 và 1. Mỗi bit là đơn vị nhỏ nhất của dữ liệu.</li>
     </ul>
-
     <p><strong>Các phép chuyển đổi cơ bản:</strong></p>
     <ul>
         <li>Một byte (8 bit) có giá trị từ 0 đến 255 (dec) = <code>0x00</code> đến <code>0xFF</code> (hex).</li>
         <li>Hai byte ghép lại thành word (16 bit), giá trị từ 0 đến 65535 (dec) = <code>0x0000</code> đến <code>0xFFFF</code> (hex).</li>
-        <li>Địa chỉ bộ nhớ thường được viết dưới dạng hex với tiền tố 0x, ví dụ <code>0xD730</code>.</li>
+        <li>Địa chỉ bộ nhớ thường được viết dưới dạng hex với tiền tố <code>0x</code>, ví dụ <code>0xD730</code>.</li>
     </ul>
 
-    <h3>1.1 Các thanh ghi (Registers)</h3>
-    <p>Thanh ghi chính là những ô nhớ cực kỳ nhanh nằm ngay trong CPU, chứa dữ liệu đang được xử lý ngay lập tức.</p>
+    <h3 id="p1-1">1.1. Các thanh ghi (Registers)</h3>
+    <p>Hãy tưởng tượng CPU (bộ xử lý trung tâm) của máy tính giống như một người thợ đang làm việc tại bàn. Để làm việc nhanh, người thợ không phải lúc nào cũng chạy vào kho lấy đồ, mà có để sẵn một số dụng cụ ngay trên bàn. Thanh ghi chính là những ô nhớ cực kỳ nhanh nằm ngay trong CPU, giống như những chiếc hộp nhỏ trên bàn làm việc. Chúng chứa những dữ liệu đang được xử lý ngay lập tức.</p>
 
-    <h4>Sơ đồ phân cấp thanh ghi:</h4>
-<pre>QR0 (chứa được 8 byte)
+    <h4 id="p1-1-1">1.1.1. Sơ đồ phân cấp thanh ghi</h4>
+    <div class="tree-structure">QR0 (chứa được 8 byte)
 ├── XR0 (4 byte)
-│   ├── ER0 (2 byte)  --> [R1, R0]
-│   └── ER2 (2 byte)  --> [R3, R2]
+│   ├── ER0 (2 byte)
+│   │   ├── R1
+│   │   └── R0
+│   └── ER2 (2 byte)
+│       ├── R3
+│       └── R2
 └── XR4 (4 byte)
-    ├── ER4 (2 byte)  --> [R5, R4]
-    └── ER6 (2 byte)  --> [R7, R6]
+    ├── ER4 (2 byte)
+    │   ├── R5
+    │   └── R4
+    └── ER6 (2 byte)
+        ├── R7
+        └── R6
 
 QR8 (8 byte)
 ├── XR8 (4 byte)
-│   ├── ER8 (2 byte)  --> [R9, R8]
-│   └── ER10 (2 byte) --> [R11, R10]
+│   ├── ER8 (2 byte)
+│   │   ├── R9
+│   │   └── R8
+│   └── ER10 (2 byte)
+│       ├── R11
+│       └── R10
 └── XR12 (4 byte)
-    ├── ER12 (2 byte) --> [R13, R12]
-    └── ER14 (2 byte) --> [R15, R14]</pre>
+    ├── ER12 (2 byte)
+    │   ├── R13
+    │   └── R12
+    └── ER14 (2 byte)
+        ├── R15
+        └── R14</div>
 
     <p><strong>Tóm lại:</strong></p>
     <ul>
         <li><code>Rn</code> (R0 → R15): 1 byte, đơn vị nhỏ nhất.</li>
-        <li><code>ERn</code> (ER0, ER2, ..., ER14): 2 byte, ghép 2 thanh ghi R liền nhau.</li>
+        <li><code>ERn</code> (ER0, ER2, ..., ER14): 2 byte, ghép 2 thanh ghi R liền nhau. (Ví dụ ER0 = R1, R0; ER2 = R3, R2)</li>
         <li><code>XRn</code> (XR0, XR4, XR8, XR12): 4 byte, ghép 2 ER liền nhau.</li>
         <li><code>QRn</code> (QR0, QR8): 8 byte, ghép 2 XR liền nhau.</li>
     </ul>
 
-    <p><strong>Thanh ghi điều khiển quan trọng:</strong></p>
+    <p><strong>Thanh ghi điều khiển (quan trọng):</strong></p>
     <ul>
-        <li><code>PC</code> (Program Counter): 2 byte, chứa địa chỉ lệnh hiện tại.</li>
-        <li><code>SP</code> (Stack Pointer): 2 byte, trỏ đến đỉnh ngăn xếp.</li>
-        <li><code>LR</code> (Link Register): 2 byte, lưu địa chỉ trả về khi gọi hàm con (BL).</li>
-        <li><code>EA</code> (Effective Address): 2 byte, dùng trong địa chỉ gián tiếp [EA] và [EA+].</li>
+        <li><code>PC</code> (Program Counter) : 2 byte, chứa địa chỉ lệnh hiện tại (cùng CSR tạo địa chỉ 20-bit).</li>
+        <li><code>SP</code> (Stack Pointer) : 2 byte, trỏ đến đỉnh ngăn xếp (stack giảm dần).</li>
+        <li><code>LR</code> (Link Register) : 2 byte, lưu địa chỉ trả về khi gọi hàm con (BL).</li>
+        <li><code>EA</code> (Effective Address) : 2 byte, dùng trong địa chỉ gián tiếp [EA] và [EA+].</li>
+        <li><code>DSR</code> (Data Segment Register) : 8 bit, dùng để truy cập bộ nhớ dữ liệu ngoài segment 0.</li>
+        <li><code>CSR</code> (Code Segment Register) : 4 bit, cùng PC tạo địa chỉ 20-bit cho vùng nhớ chương trình.</li>
     </ul>
 
-    <h3>1.2 Biểu diễn số hex</h3>
+    <div class="note">
+        <strong>KHÔNG CẦN THIẾT CHO NEWBIE:</strong><br>
+        <code>ELR1, ELR2, ELR3</code> : tương tự LR nhưng dùng cho các mức ngắt.<br>
+        <code>PSW</code> (Program Status Word) : 8 bit, gồm các cờ:<br>
+        &nbsp;&nbsp;bit 7: C (Carry), bit 6: Z (Zero), bit 5: S (Sign), bit 4: OV (Overflow)<br>
+        &nbsp;&nbsp;bit 3: MIE (Master Interrupt Enable), bit 2: HC (Half Carry), bit 1-0: ELEVEL (Exception level)
+    </div>
+
+    <h3 id="p1-2">1.2. Biểu diễn số hex</h3>
     <ul>
-        <li>Giá trị <code>0001</code> có 2 cách biểu diễn: <code>hex 00 01</code> hoặc <code>0x0100</code>.</li>
-        <li>Ký hiệu <code>0x</code> sẽ ngược lại với <code>hex</code>:
+        <li>Giá trị <code>0001</code> có 2 cách biểu diễn:
             <ul>
-                <li>Địa chỉ e9e0 → <code>0xe9e0</code></li>
-                <li>Địa chỉ d730 → <code>0xd730</code></li>
+                <li>hex <code>00 01</code></li>
+                <li><code>0x0100</code></li>
             </ul>
         </li>
-        <li>Ví dụ đảo ngược byte:
+        <li><code>0x</code> sẽ ngược lại với hex, địa chỉ thì viết là <code>0x</code>, ví dụ:
             <ul>
-                <li><code>hex 2e d7 = 0xd72e</code></li>
-                <li><code>hex 30 d6 84 d1 = 0xd184d630</code></li>
+                <li>địa chỉ e9e0 -> <code>0xe9e0</code></li>
+                <li>địa chỉ d730 -> <code>0xd730</code></li>
+            </ul>
+        </li>
+        <li>Ví dụ đảo ngược:
+            <ul>
+                <li>hex <code>2e d7</code> = <code>0xd72e</code></li>
+                <li>hex <code>30 d6 84 d1</code> = <code>0xd184d630</code></li>
             </ul>
         </li>
     </ul>
 
-    <h3>1.3 Bộ nhớ</h3>
-    <table>
-        <tr><th>Địa chỉ</th><th>Chức năng / Mô tả</th></tr>
-        <tr><td><code>0xD180 - 0xD246</code></td><td>Vùng nhập liệu (Input buffer)</td></tr>
-        <tr><td><code>0xD248 - 0xD30E</code></td><td>Vùng lịch sử (History)</td></tr>
-        <tr><td><code>0xD522 - 0xD5E8</code></td><td>Vùng Undo</td></tr>
-        <tr><td><code>0xDDD4</code></td><td>Bộ đệm màn hình 1 (Screen buffer 1)</td></tr>
-        <tr><td><code>0xE3D4</code></td><td>Bộ đệm màn hình 2 (Screen buffer 2)</td></tr>
-        <tr><td><code>0xE9E0</code></td><td>Vùng an toàn để lưu chương trình (Backup)</td></tr>
-        <tr><td><code>0xD730</code></td><td>Địa chỉ chạy chương trình (Runtime)</td></tr>
-        <tr><td><code>0xD111</code></td><td>Chế độ hiện tại (Mode)</td></tr>
-        <tr><td><code>0xD137</code></td><td>Kích thước font (font_size)</td></tr>
-        <tr><td><code>0xD138</code></td><td>Đảo ngược màu (01: bình thường, 04: ngược màu)</td></tr>
-        <tr><td><code>0xF033</code></td><td>Độ sáng màn hình (giá trị càng lớn càng tối)</td></tr>
-        <tr><td><code>0xF039</code></td><td>Cuộn màn hình (Scroll)</td></tr>
-    </table>
-
-    <h3>1.4 Các lệnh cơ bản (Assembly)</h3>
-<pre>MOV a, b          : Gán b vào a.
-ADD a, b          : a = a + b.
-SUB a, b          : a = a - b.
-CMP a, b          : So sánh a và b, cập nhật cờ.
-L a, [b]          : Tải dữ liệu từ bộ nhớ tại địa chỉ b vào thanh ghi a.
-ST a, [b]         : Lưu dữ liệu trong thanh ghi a vào bộ nhớ tại địa chỉ b.
-PUSH r / POP r    : Đẩy vào / Lấy ra từ ngăn xếp (Stack).
-B label           : Nhảy không điều kiện.
-BC cond, label    : Nhảy có điều kiện.
-BL label/reg      : Nhảy đến label/reg, lưu địa chỉ trả về vào LR.
-RT                : Trở về từ chương trình con (PC = LR).
-NOP               : Không làm gì.</pre>
-
-    <h2 id="phan2">PHẦN 2: DISASSEMBLY & GADGET</h2>
-
-    <h3>2.1 Disassembly & Gadget</h3>
+    <h3 id="p1-3">1.3. Bộ nhớ</h3>
     <ul>
-        <li><strong>Disassembly:</strong> File chứa mã assembly được dịch ngược từ ROM.</li>
-        <li><strong>Gadget:</strong> Đoạn mã kết thúc bằng <code>RT</code> hoặc <code>POP PC</code>.</li>
+        <li> Không gian bộ nhớ dữ liệu: 16 MB (256 segment, mỗi segment 64KB). Segment 0 (0:0000-0:FFFF) là vùng đặc biệt chứa bộ đệm màn hình, vùng nhập liệu, v.v.</li>
+        <li> Không gian bộ nhớ chương trình: 1 MB (16 segment, mỗi segment 32K word).</li>
+        <li> Các địa chỉ quan trọng thường dùng trong ROP:
+            <ul>
+                <li><code>0xD180 - 0xD246</code> : vùng nhập liệu (input buffer)</li>
+                <li><code>0xD248 - 0xD30E</code> : vùng lịch sử (history)</li>
+                <li><code>0xD522 - 0xD5E8</code> : vùng undo</li>
+                <li><code>0xDDD4</code> : bộ đệm màn hình 1 (screen buffer 1)</li>
+                <li><code>0xE3D4</code> : bộ đệm màn hình 2 (screen buffer 2)</li>
+                <li><code>0xE9E0</code> : vùng an toàn để lưu chương trình (backup)</li>
+                <li><code>0xD730</code> : địa chỉ chạy chương trình (runtime)</li>
+                <li><code>0xD111</code> : chế độ hiện tại (mode)</li>
+                <li><code>0xD129</code> : kích thước font ở LineIO</li>
+                <li><code>0xD137</code> : kích thước font (font_size)</li>
+                <li><code>0xD139</code> : bộ đệm màn hình hiện tại (current_screen_buffer)</li>
+                <li><code>0xD113</code> : con trỏ nhấp nháy</li>
+                <li><code>0xD138</code> : đảo ngược trắng đen (01: bình thường, 04: ngược màu)</li>
+                <li><code>0xF033</code> : độ sáng màn hình (giá trị càng lớn, màn hình càng tối)</li>
+                <li><code>0xF034</code> : ma trận (giá trị càng lớn, ma trận càng rõ)</li>
+                <li><code>0xF039</code> : cuộn màn hình (tăng liên tục để tạo hiệu ứng cuộn)</li>
+                <li><em>~và nhiều địa chỉ khác~</em></li>
+            </ul>
+        </li>
     </ul>
 
-    <h3>2.2 Cách gọi gadget trong code</h3>
-<pre>call ABCDE = DE BC ?A ??  (thường để ?=3 và ??=30)
-Ví dụ: pop xr0 = call 17B34 => hex: 34 7B 31 30</pre>
+    <h3 id="p1-4">1.4. Các lệnh cơ bản (assembly)</h3>
+    <ul>
+        <li><code>MOV a, b</code> : gán b vào a (a là thanh ghi, b có thể là thanh ghi hoặc hằng).</li>
+        <li><code>ADD a, b</code> : a = a + b hay a += b.</li>
+        <li><code>SUB a, b</code> : a = a - b hay a -= b.</li>
+        <li><code>CMP a, b</code> : so sánh a và b, cập nhật cờ (C, Z, S, OV) (bằng cách thực hiên a-b rồi cập nhật cờ, nhưng bỏ kết quả).</li>
+        <li><code>L a, [b]</code> : tải dữ liệu từ bộ nhớ tại địa chỉ b vào thanh ghi a.</li>
+        <li><code>ST a, [b]</code> : lưu dữ liệu trong thanh ghi a vào bộ nhớ tại địa chỉ b.</li>
+        <li><code>PUSH r</code> : giảm SP bằng kích thước của thanh ghi r và lưu r vào stack.</li>
+        <li><code>POP r</code> : lấy dữ liệu từ stack vào thanh ghi r, tăng SP bằng kích thước của r.</li>
+        <li><code>B label</code> : nhảy không điều kiện.</li>
+        <li><code>BC cond, label</code> : nhảy có điều kiện dựa trên cờ (EQ, NE, LT, GE, ...).</li>
+        <li><code>BL label/reg</code> : đưa PC đến địa chỉ của label hoặc địa chỉ trong thanh ghi reg, lưu địa chỉ trả về vào LR.</li>
+        <li><code>RT</code> : trở về từ chương trình con (PC = LR).</li>
+        <li><code>RTI</code> : trở về từ ngắt (khôi phục PC, PSW từ thanh ghi dự phòng).</li>
+        <li><code>NOP</code> : không làm gì.</li>
+        <li><code>EI / DI</code> : bật / tắt ngắt toàn cục.</li>
+        <li><code>SC / RC / CPLC</code> : đặt / xóa / đảo cờ C.</li>
+    </ul>
+    <p><strong>Các lệnh thao tác bit:</strong></p>
+    <ul>
+        <li><code>TB Rn.bit</code> : kiểm tra bit, kết quả Z = ~bit.</li>
+        <li><code>RB Rn.bit</code> : xóa bit (set 0).</li>
+        <li><code>SB Rn.bit</code> : đặt bit (set 1).</li>
+    </ul>
+    <p><strong>Các lệnh thao tác ngăn xếp đặc biệt:</strong></p>
+    <ul>
+        <li><code>PUSH EA, POP EA</code> : lưu/phục hồi thanh ghi EA.</li>
+        <li><code>PUSH LR</code> : lưu LR (và LCSR nếu ở chế độ LARGE).</li>
+    </ul>
 
+    <h3 id="p1-5">1.5. Ngăn xếp (stack)</h3>
+    <p>Ngăn xếp là một vùng nhớ đặc biệt trong RAM, được CPU sử dụng để lưu tạm thông tin theo kiểu “vào sau ra trước” (LIFO – Last In, First Out). Hãy tưởng tượng một chồng đĩa: Bạn muốn cất thêm một cái đĩa, bạn đặt nó lên trên cùng của chồng ; Khi lấy đĩa ra, bạn cũng lấy từ trên cùng xuống.</p>
+    <ul>
+        <li>SP trỏ đến đỉnh stack, stack giảm dần (địa chỉ nhỏ dần).</li>
+        <li>Khi PUSH, SP giảm bằng kích thước thanh ghi được push; khi POP, SP tăng bằng kích thước thanh ghi được pop. Thanh ghi 1 byte là trường hợp đặc biệt nói ở dưới.</li>
+        <li>Mỗi thao tác stack luôn theo word (2 byte), nếu push thanh ghi 1 byte, vẫn trừ 2 byte và lưu 1 byte kèm 1 byte rác.</li>
+        <li>Các gadget ROP thường tận dụng việc thay đổi SP để điều khiển luồng.</li>
+    </ul>
+    <p><em>*ĐỌC THÊM TRONG TÀI LIỆU nX-U16/100 Core|Cẩm nang hướng dẫn*</em></p>
+
+    <!-- PHẦN 2 -->
+    <h2 id="phan2">PHẦN 2: DISASSEMBLY , GADGET</h2>
+
+    <h3 id="p2-1">2.1. Disassembly (disas) là gì?</h3>
+    <p>Disassembly là file chứa mã assembly được dịch ngược từ ROM, cho biết lệnh và địa chỉ của từng đoạn code. Từ đó ta tìm ra các gadget.</p>
+
+    <h3 id="p2-2">2.2. Gadget là gì?</h3>
+    <p>Gadget là đoạn mã kết thúc bằng lệnh RT (return) hoặc POP PC, cho phép nối tiếp nhiều gadget trên stack để xây dựng chương trình.</p>
+
+    <h3 id="p2-3">2.3. Cách gọi gadget trong code</h3>
+    <p>Khi gọi một gadget, trong hex của máy tính sẽ mất 4 byte.<br>
+    Giả sử địa chỉ gadget muốn gọi là <code>0xABCDE</code>, ta viết:<br>
+    <code>call ABCDE = DE BC ?A ??</code><br>
+    (<code>?</code> có thể là bất kỳ số nào, thường để <code>?=3</code> và <code>??=30</code>)<br>
+    Ví dụ:<br>
+    <code>pop xr0 = call 17B34 = 34 7B 31 30</code></p>
+
+    <h3 id="p2-4">2.4. Cách đọc file disassembly</h3>
+    <p>Một dòng disassembly có dạng:</p>
+    <pre><code>asm                        ; address | opcode</code></pre>
+    <p>Ví dụ:</p>
+    <pre><code>pop er2                    ; 18974 | F21E
+pop pc                     ; 18976 | F28E</code></pre>
+    <ul>
+        <li><strong>asm:</strong> lệnh</li>
+        <li><strong>address:</strong> địa chỉ của lệnh trong bộ nhớ (ROM).</li>
+        <li><strong>opcode:</strong> mã máy của lệnh (thường 2 byte).</li>
+    </ul>
+    <p>Chương trình ROP sử dụng địa chỉ (address) để nhảy đến các gadget.<br>
+    Để dịch địa chỉ thành mã hex dùng trong chương trình:</p>
+    <pre><code>address = Z:YYXXH
+=> code = XX YY ?Z ??</code></pre>
+    <p>với <code>??</code> là bất kỳ số hex nào (thường là 3 và 30).<br>
+    Ví dụ:</p>
+    <pre><code>address 18974 = 74 89 31 30
+address 18976 = 76 89 31 30</code></pre>
+    <p>Trong quá trình viết chương trình ROP, ta chỉ cần lấy địa chỉ từ disas và chuyển thành hex theo cách đó.<br>
+    Opcode là mã máy (mã hex) của lệnh, thường dài 2 byte. Nó là dạng nhị phân mà CPU hiểu được. Trong file disassembly, opcode nằm sau dấu "|".</p>
+
+    <h3 id="p2-5">2.5. Quy ước gọi hàm (calling convention)</h3>
+    <ul>
+        <li>Tham số: các thanh ghi (và stack nếu cần ví dụ như strcpy thì cần er2, er0)</li>
+        <li>Giá trị trả về: các thanh ghi.</li>
+        <li>Các thanh ghi khác phải được bảo toàn bởi hàm được gọi (push/pop).</li>
+        <li>Hàm thường bắt đầu bằng PUSH LR, PUSH QR8, ... và kết thúc bằng POP PC hoặc RT</li>
+    </ul>
+
+    <h3 id="p2-6">2.6. Đọc và ghi vào RAM</h3>
+    <p>Trong assembly, để ghi dữ liệu vào RAM, ta dùng lệnh ST (Store). Để đọc từ RAM, dùng L (Load).<br>
+    Cú pháp:</p>
+    <pre><code>ST source, [ram]    ; ghi giá trị trong source vào địa chỉ ram
+L source, [ram]     ; đọc giá trị từ địa chỉ ram vào source</code></pre>
+    <p>Trong đó:</p>
+    <ul>
+        <li><code>source</code>: thanh ghi (Rn, ERn, XRn, QRn)</li>
+        <li><code>ram</code>: địa chỉ bộ nhớ (có thể là hằng số, thanh ghi hoặc biểu thức)</li>
+    </ul>
+    <p>Ký hiệu <code>=></code> chỉ kết quả sau khi thực thi:</p>
+    <pre><code>[ram] = source      ; nghĩa là giá trị tại địa chỉ ram trở thành source
+source = [ram]      ; nghĩa là source nhận giá trị từ địa chỉ ram</code></pre>
+
+    <h3 id="p2-7">2.7. Lệnh nhảy B và BL</h3>
+    <p>B (Branch) và BL (Branch and Link) là hai lệnh nhảy.</p>
+    <p><strong>B function</strong></p>
+    <ul>
+        <li>Nhảy đến địa chỉ function.</li>
+        <li>Không lưu địa chỉ trở về.</li>
+        <li>Khi gặp RT hoặc POP PC, sẽ không quay lại vị trí gọi B.</li>
+    </ul>
+    <p><strong>BL function</strong></p>
+    <ul>
+        <li>Nhảy đến địa chỉ function.</li>
+        <li>Lưu địa chỉ trở về (lệnh tiếp theo sau BL) vào thanh ghi LR.</li>
+        <li>Khi gặp RT hoặc POP PC, chương trình sẽ quay lại vị trí gọi BL (vì LR chứa địa chỉ đó).</li>
+    </ul>
+    <p>Trong ROP, "function" có thể là địa chỉ của gadget hoặc hàm có sẵn trong ROM (các f_?????).</p>
+
+    <h3 id="p2-8">2.8. Ba lệnh đặc biệt: POP, POP PC, RT</h3>
+    <p><strong>POP source</strong></p>
+    <ul>
+        <li>Lấy 2 (hoặc 4, 8) byte từ đỉnh stack (SP) vào source, sau đó tăng SP lên tương ứng.</li>
+        <li>Nếu source là thanh ghi 1 byte (Rn), POP vẫn lấy 2 byte và chỉ ghi byte thấp vào Rn, byte cao bỏ qua.</li>
+    </ul>
+    <p><strong>POP PC</strong></p>
+    <ul>
+        <li>Lấy 2 byte từ đỉnh stack vào PC (Program Counter), tức là nhảy đến địa chỉ đó.</li>
+        <li>Đây là cách phổ biến để kết thúc một gadget và chuyển sang gadget tiếp theo.</li>
+    </ul>
+    <p><strong>RT (Return)</strong></p>
+    <ul>
+        <li>Lấy địa chỉ từ LR vào PC, tức là trở về nơi gọi hàm (BL trước đó).</li>
+        <li>Thường dùng ở cuối các hàm con.</li>
+    </ul>
+    <p>Trong ROP, các gadget thường kết thúc bằng RT hoặc POP PC để nối tiếp nhau.</p>
+
+    <!-- PHẦN 3 -->
     <h2 id="phan3">PHẦN 3: CÁC HÀM PHỔ BIẾN</h2>
 
-    <h3>3.1 Hàm in chữ (printline)</h3>
-    <p>In dòng chữ font to tại vị trí chỉ định. Địa chỉ: <code>23DC8</code>.</p>
-<pre>org 0xe9e0
-setup:
+    <div class="function-block" id="p3-1">
+        <h3>3.1. Hàm in chữ (printline)</h3>
+        <p>Hàm này in một dòng chữ lên màn hình tại vị trí dòng chỉ định. Sau khi gọi, bạn phải dùng render.ddd4 để cập nhật màn hình mới thấy kết quả.<br>
+        <em>(Có nhiều loại hàm in chữ nhưng tôi sẽ chỉ nhắc đến printline tại nó là cơ bản nhất)</em></p>
+        <p><strong>Địa chỉ:</strong> <code>23DC8</code></p>
+        <p><strong>Tham số:</strong></p>
+        <ul>
+            <li>R0: linepos (khoảng cách từ pixel đầu của chữ tới đỉnh màn hình. 1->31)</li>
+            <li>R1: pad (giá trị không ảnh hưởng, thường để 30 cho đủ 2 byte)</li>
+            <li>ER2: địa chỉ của chuỗi ký tự</li>
+        </ul>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = 0x&lt;pad&gt;&lt;linepos&gt; , &lt;địa chỉ của chuỗi kí tự&gt;
+printline
+render.ddd4</code></pre>
+        <p><strong>Ví dụ:</strong> in "Xin chào" ở dòng 3 (linepos = 21)</p>
+        <pre><code>org 0xe9e0 # địa chỉ của program
+setup: # đây là label , bạn đặt tên tuỳ ý
+    buffer_clear # xoá sạch màn hình
+    setlr        # giúp program không bị treo khi sử dụng hàm có BL hoặc rt (trong program này không cần thiết)
+    setsfr       # giúp khởi tạo màn hình và bàn phím (program này không cần)
+    setlr_pc     # kết hợp giữa setlr và nhảy (program này không cần)
+inchu:
+    xr0 = 0x3021 , adr_of text    # pad = 30, linepos = 21 ; adr_of nghĩa là địa chỉ của label
+    printline                     # in chữ
+    render.ddd4                   # cập nhật màn hình
+text:
+    str "Xin~chào"    # text          
+    0x00              # cần có để kết thúc chữ</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>ta có:
+                <ul>
+                    <li>r0 là 21 (linepos) , r1 là 30 (pad)</li>
+                    <li>ghép lại thành: hex 21 30</li>
+                    <li>tức 0x3021 (nhắc lại 0x sẽ ngược lại với hex)</li>
+                </ul>
+            </li>
+            <li>adr_of text là địa chỉ của nhãn text, nơi chứa chuỗi.</li>
+            <li>render.ddd4 bắt buộc phải có để hiển thị.</li>
+            <li>lùi đầu dòng trong program chỉ để cho dễ nhìn , trên thực tế ta có thể cách , có thể không và cách bao nhiêu tuỳ thích</li>
+        </ul>
+        <p><strong>Lưu ý về linepos:</strong></p>
+        <ul>
+            <li>Dòng 1: 01</li>
+            <li>Dòng 2: 11</li>
+            <li>Dòng 3: 21</li>
+            <li>Dòng 4: 31</li>
+            <li><em>(Đây là các linepos thường dùng)</em></li>
+        </ul>
+        <p><strong>Lưu ý về in chữ:</strong> với printline là in chữ font to (0E) nên tối đa chỉ in được 17 chữ.</p>
+        <p>Để chạy chương trình, bạn cần compile asm sang hex rồi inject vào vùng e9e0 và dùng launcher chung sau:</p>
+        <pre><code>|  FD24 30 30 DA 7B 31 30 FE 03 E0 E9 30 D7 2E D7 32 89 31 30 30 30 74 1F 32 48 |</code></pre>
+        <p>rồi ấn [=]</p>
+    </div>
+
+    <div class="function-block" id="p3-2">
+        <h3>3.2. Hàm in chữ font (smallprint)</h3>
+        <p>Hàm này in một dòng chữ với kích thước font nhỏ (8x8 pixel) tại vị trí dòng chỉ định.</p>
+        <p><strong>Địa chỉ:</strong> <code>23DCC</code></p>
+        <p><strong>Tham số:</strong></p>
+        <ul>
+            <li>r0: kích thước font ( là 08, 0a, 0e)</li>
+            <li>r1: linepos (vị trí dòng từ 01 -> 31)</li>
+            <li>er2: địa chỉ của chuỗi ký tự</li>
+        </ul>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = 0x&lt;linepos&gt;&lt;font&gt; , &lt;địa chỉ của text&gt;
+smallprint
+render.ddd4</code></pre>
+        <p><strong>Ví dụ:</strong> in "Xin chào" bằng font to ở dòng 2 và chữ "Hello" font vừa ở dòng 3</p>
+        <pre><code>org 0xe9e0
+start:
+    setlr
+    setsfr
+    buffer_clear
+inchu:
+    xr0 = 0x110e , adr_of text1
+    smallprint
+    xr0 = 0x210a , adr_of text2
+    smallprint
+    render.ddd4     # lưu ý ở đây chỉ cần render.ddd4 một lần
+text1:
+    str "~~Xin~chào"
+    0x00
+text2:
+    str "~~Hello"
+    0x00</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>smallprint in chữ với font bé 08 , mỗi dòng có thể chứa nhiều ký tự hơn printline.</li>
+            <li>render.ddd4 vẫn bắt buộc phải gọi sau khi in.</li>
+        </ul>
+        <p><strong>Lưu ý:</strong></p>
+        <ul>
+            <li>Kích thước font thường là 08 (nhỏ), 0a (trung bình), 0e (to)</li>
+            <li>linepos từ 01 đến 31</li>
+            <li>chỉ font to mới có thể dùng kí tự tiếng việt</li>
+        </ul>
+    </div>
+
+    <div class="function-block" id="p3-3">
+        <h3>3.3. Hàm vẽ bitmap (render_bitmap)</h3>
+        <p>Hàm này vẽ một hình ảnh bitmap lên màn hình tại tọa độ và kích thước chỉ định. Dữ liệu bitmap là các bit pixel, mỗi byte đại diện cho 8 pixel theo chiều ngang.</p>
+        <p><strong>Địa chỉ:</strong> <code>09848</code></p>
+        <p><strong>Tham số:</strong></p>
+        <ul>
+            <li>xr0: hex <code>&lt;x_pos&gt; &lt;y_pos&gt; &lt;width&gt; &lt;height&gt;</code> (mỗi giá trị 1 byte, phải chuyển từ Dec sang Hex)</li>
+            <li>er0: adr_of bitmap</li>
+        </ul>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = hex &lt;x_pos&gt; &lt;y_pos&gt; &lt;width&gt; &lt;height&gt;
+render_bitmap
+er0 = adr_of bitmap
+render.ddd4</code></pre>
+        <p><strong>Ví dụ:</strong> vẽ hình vuông 8x8 tại (10,10)</p>
+        <pre><code>org 0xe9e0
+start:
     buffer_clear
     setlr
     setsfr
-inchu:
-    xr0 = 0x3021, adr_of text    # linepos = 21 (dòng 3)
+ve:
+    xr0 = hex 0A 0A 08 08      # x=10 (0x0A), y=10, rộng=8, cao=8
+    render_bitmap
+    er0 = adr_of hinh
+    render.ddd4
+hinh:
+    hex ff 81 81 81 81 81 81 ff   # 8x8 ô vuông viền</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li><code>xr0 = hex 0A 0A 08 08</code> : x=10 (0x0A), y=10 (0x0A), width=8 (0x08), height=8 (0x08)</li>
+            <li>render_bitmap vẽ vào bộ đệm hiện tại, render.ddd4 cập nhật màn hình</li>
+        </ul>
+        <p><strong>Lưu ý:</strong></p>
+        <ul>
+            <li>Các số như 10, 8 phải chuyển sang hex: 10 -> 0A, 8 -> 08.</li>
+            <li>Bitmap phải vừa đúng kích thước (width * height / 8 byte)</li>
+            <li>Nếu vượt ra ngoài màn hình, hàm sẽ không vẽ.</li>
+        </ul>
+    </div>
+
+    <div class="function-block" id="p3-4">
+        <h3>3.4. Hàm vẽ đường thẳng (line_draw)</h3>
+        <p>Hàm này vẽ một đường thẳng từ điểm (x1, y1) đến điểm (x2, y2).</p>
+        <p><strong>Địa chỉ:</strong> <code>08E62</code></p>
+        <p><strong>Tham số:</strong></p>
+        <ul>
+            <li>xr0: hex <code>&lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt;</code> (mỗi giá trị 1 byte, phải chuyển từ số sang hex)</li>
+        </ul>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = hex &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt;
+line_draw
+render.ddd4</code></pre>
+        <p><strong>Ví dụ:</strong> vẽ đường chéo từ (0,0) đến (192,63)</p>
+        <pre><code>org 0xe9e0
+start:
+    buffer_clear
+    setlr
+    setsfr
+ve:
+    xr0 = hex 00 00 c0 3f        # x1=0, y1=0, x2=192 (0xC0), y2=63 (0x3F)
+    line_draw
+    render.ddd4
+# không cần dữ liệu thêm</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li><code>xr0 = hex 00 00 c0 3f</code> : (0,0) đến (192,63)</li>
+            <li>line_draw vẽ đường thẳng vào bộ đệm, render.ddd4 cập nhật màn hình</li>
+        </ul>
+        <p><strong>Lưu ý:</strong></p>
+        <ul>
+            <li>Các số phải chuyển sang hex: 192 -> C0, 63 -> 3F.</li>
+            <li>Tọa độ x từ 0 đến 191, y từ 0 đến 63 (màn hình 192x64 pixel).</li>
+            <li>render.ddd4 bắt buộc phải gọi sau khi vẽ.</li>
+        </ul>
+    </div>
+
+    <div class="function-block" id="p3-5">
+        <h3>3.5. Hàm chờ phím SHIFT (waitshift)</h3>
+        <p>Hàm này tạm dừng chương trình và chờ người dùng nhấn phím SHIFT. Khi SHIFT được nhấn, chương trình tiếp tục chạy.</p>
+        <p><strong>Địa chỉ:</strong> <code>23DDE</code></p>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>waitshift</code></pre>
+        <p><strong>Ví dụ:</strong> in "Đã nhấn SHIFT" sau khi nhấn SHIFT</p>
+        <pre><code>org 0xe9e0
+start:
+    buffer_clear
+    setlr
+    setsfr
+print:
+    waitshift                     # chờ nhấn SHIFT
+    xr0 = 0x3021 , adr_of text
     printline
     render.ddd4
 text:
-    str "Xin~chào"
-    0x00</pre>
-
-    <h3>3.2 Các hàm đọc phím (getkey / getscancode)</h3>
-    <table>
-        <tr><th>Hàm</th><th>Địa chỉ</th><th>Mô tả</th></tr>
-        <tr><td><code>getkey / getscancode_nodelay</code></td><td><code>2F5EA</code></td><td>Đọc phím không chờ</td></tr>
-        <tr><td><code>getscancode</code></td><td><code>1F24E</code></td><td>Đọc phím có chờ</td></tr>
-    </table>
-
-    <div class="note">
-        <strong>Bảng keycode KI/KO phổ biến:</strong><br>
-        <code>SHIFT: 80 01</code> | <code>ALPHA: 80 02</code> | <code>MENU: 80 10</code> | <code>AC: 04 10</code> | <code>=: 01 40</code><br>
-        <code>Phím 1-3: 01 01, 01 02, 01 04</code> | <code>Phím 4-6: 02 01, 02 02, 02 04</code>
+    str "Da~nhan~SHIFT"</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>waitshift sẽ đứng yên cho đến khi SHIFT được nhấn.</li>
+            <li>Sau đó chương trình in dòng chữ "Da nhan SHIFT" ở dòng 3.</li>
+        </ul>
+        <p><strong>Lưu ý:</strong></p>
+        <ul>
+            <li>Không cần tham số, không cần render trước waitshift.</li>
+            <li>Nên đặt waitshift sau các khởi tạo cơ bản.</li>
+        </ul>
     </div>
 
+    <div class="function-block" id="p3-6">
+        <h3>3.6. Hàm tính toán (calc_func)</h3>
+        <p>Hàm này thực hiện một phép tính được cho dưới dạng token (mã hex) và trả về kết quả dưới dạng số NUM (10 byte). Rất hữu ích để tính toán các biểu thức phức tạp.</p>
+        <p><strong>Địa chỉ:</strong> <code>17922</code></p>
+        <p><strong>Tham số:</strong></p>
+        <ul>
+            <li>xr0: hex <code>&lt;addr_calc_ptr&gt; &lt;addr_result&gt;</code>
+                <ul>
+                    <li>addr_calc_ptr: địa chỉ của một vùng nhớ chứa địa chỉ thực của phép tính.</li>
+                    <li>addr_result: địa chỉ vùng nhớ để lưu kết quả (10 byte).</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = hex &lt;addr_calc_ptr&gt; &lt;addr_result&gt;
+calc_func</code></pre>
+        <p><strong>Ví dụ:</strong> tính 36+67</p>
+        <pre><code>tinh:
+    xr0 = adr_of addr_calc_ptr , adr_of result
+    calc_func
+# vùng nhớ chứa con trỏ đến phép tính
+addr_calc_ptr:
+    adr_of calc                     # địa chỉ thực của phép tính
+# vùng nhớ chứa phép tính (token)
+calc:
+    hex 33 36 a6 36 37 00         # "36+67", 00 ở cuối là bắt buộc
+# vùng nhớ chứa kết quả (10 byte)
+result:
+    hex 00 00 00 00 00 00 00 00 00 00</code></pre>
+        <p><strong>Giải thích:</strong> calc_func đọc token, tính toán, ghi kết quả dạng NUM vào result</p>
+        <p><strong>Lưu ý:</strong> Kết quả trả về là dạng NUM (10 byte), không phải số hex thông thường.</p>
+    </div>
+
+    <div class="function-block" id="p3-7">
+        <h3>3.7. Hàm so sánh bảng (cmp_ea) (quan trọng)</h3>
+        <p>Hàm cmp_ea (<code>09C20</code>) so sánh giá trị trong ER0 với các mục trong bảng được trỏ bởi EA. Mỗi mục gồm 2 byte giá trị so sánh, sau đó là 2 byte dữ liệu. Khi tìm thấy mục có giá trị bằng ER0, EA sẽ được cập nhật để trỏ đến dữ liệu ngay sau giá trị đó. Nếu không tìm thấy, EA sẽ trỏ đến dữ liệu của mục cuối.</p>
+        <p><strong>Cơ chế:</strong></p>
+        <ul>
+            <li>EA ban đầu trỏ đến đầu bảng.</li>
+            <li>Hàm duyệt từng mục, so sánh 2 byte đầu của mỗi mục với ER0.</li>
+            <li>Nếu khớp, EA sẽ trỏ đến 2 byte tiếp theo (dữ liệu), kết thúc.</li>
+            <li>Nếu không khớp, EA nhảy đến mục tiếp theo (cách 4 byte).</li>
+            <li>Nếu gặp <code>00 00</code> thì dừng, lúc này EA trỏ đến giá trị sau <code>00 00</code>.</li>
+        </ul>
+        <p>Sau khi cmp_ea, ta có thể dùng các gadget để lấy dữ liệu từ EA:</p>
+        <ul>
+            <li><code>1C64A</code>: ER6 = [EA] (đọc 2 byte)</li>
+            <li><code>1C2C0</code>: QR0 = [EA], LEA D002H, [EA] = QR0 (đọc 8 byte, tăng EA, ghi lại – thường dùng để lấy 2 byte đầu)</li>
+        </ul>
+        <p><strong>Ví dụ:</strong> so sánh ER0 với 0x3667, nếu bằng thì lấy 0x1234, nếu không thì lấy 0x0000.</p>
+        <pre><code>cmp:
+    er0 = 0x3667
+    ea = adr_of table
+    cmp_ea
+    qr0 = [ea], lea D002H, [ea] = qr0   # đọc 8 byte vào QR0, lúc này QR0 chứa dữ liệu
+table:
+    0x3667
+    0x1234
+    0x0000
+    0x5678</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>Nếu ER0 == 0x3667, cmp_ea sẽ đặt EA trỏ đến 0x1234 (2 byte sau 0x3667).</li>
+            <li>Lệnh <code>qr0 = [ea]</code> đọc 8 byte bắt đầu từ 0x1234. Nếu vùng nhớ đó chỉ có 2 byte dữ liệu (0x1234) và các byte sau không quan trọng, QR0 sẽ có 0x1234 ở 2 byte đầu.</li>
+            <li>Nếu ER0 không bằng 0x3667, cmp_ea sẽ gặp mục 0x0000 và đặt EA trỏ đến 0x5678.</li>
+            <li><code>qr0 = [ea]</code> đọc 8 byte từ địa chỉ ea đang trỏ vào (là 56 78 ...) nên QR0 = hex 56 78 ...</li>
+            <li><code>LEA D002H, [ea] = qr0</code> là thao tác phụ (đặt EA = D002, đặt giá trị tại EA = QR0 tức là D002 = QR0), không ảnh hưởng kết quả.</li>
+        </ul>
+        <p><strong>Lưu ý:</strong></p>
+        <ul>
+            <li>Có thể dùng gadget 1C64A (ER6 = [EA]) nếu chỉ cần lấy 2 byte dữ liệu.</li>
+            <li>Dữ liệu trong bảng không nhất thiết phải là địa chỉ, có thể là giá trị số, mã lệnh,...</li>
+            <li>Các bảng thường kết thúc bằng 0x0000 là trường hợp mặc định (giống default trong switch-case của C)</li>
+        </ul>
+    </div>
+
+    <div class="function-block" id="p3-8">
+        <h3>3.8. Các hàm đọc phím (getkey, getscancode, getscancode_nodelay)</h3>
+        <p>Có ba hàm đọc phím thường dùng trong ROP, phân biệt bởi hành vi chờ và độ trễ.</p>
+
+        <h4 id="p3-8-1">3.8.1. getkey / getscancode_nodelay (không chờ)</h4>
+        <p>Hàm này đọc phím và trả vào địa chỉ trong ER0. Nếu không có phím bấm thì không thay đổi giá trị.<br>
+        Lý do không xảy ra hiện tượng "kẹt phím" có thể được suy ra từ phần 4.1.1.<br>
+        Keycode KI/KO (2 byte) được ghi vào địa chỉ chỉ định.</p>
+        <p><strong>Địa chỉ:</strong> <code>2F5EA</code></p>
+        <p><strong>Tham số:</strong> er0: địa chỉ để lưu keycode</p>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>er0 = adr_of key
+getkey # hoặc cũng có thể dùng getscancode_nodelay
+key:
+hex 00 00</code></pre>
+
+        <h4 id="p3-8-2">3.8.2. getscancode (chờ)</h4>
+        <p>Hàm này đọc phím và dừng chương trình cho đến khi có phím được bấm.</p>
+        <p><strong>Địa chỉ:</strong> <code>1F24E</code></p>
+        <p><strong>Tham số:</strong> er0: địa chỉ để lưu keycode</p>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>er0 = adr_of key
+getscancode
+# kiểm tra key có khác 0 không
+key:
+hex 00 00</code></pre>
+
+        <p><strong>Lưu ý chung:</strong> Keycode thu được là KI/KO (2 byte)</p>
+
+        <h4 id="p3-8-3">3.8.3. Bảng keycode (KI/KO)</h4>
+        <p>Dưới đây là bảng keycode KI/KO của các phím trên Casio fx-580VN X. Mỗi phím có giá trị 2 byte (KI, KO). Dùng để so sánh với kết quả từ getkey/getscancode.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã Hex</th>
+                    <th>Phím tương ứng</th>
+                    <th>Mã Hex</th>
+                    <th>Phím tương ứng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>hex 80 01</code></td><td>[SHIFT]</td><td><code>hex 80 02</code></td><td>[ALPHA]</td></tr>
+                <tr><td><code>hex 40 04</code></td><td>[←]</td><td><code>hex 80 08</code></td><td>[→]</td></tr>
+                <tr><td><code>hex 80 04</code></td><td>[↑]</td><td><code>hex 40 08</code></td><td>[↓]</td></tr>
+                <tr><td><code>hex 80 10</code></td><td>[MENU]</td><td><code>hex 40 01</code></td><td>[OPTN]</td></tr>
+                <tr><td><code>hex 40 02</code></td><td>[CALC]</td><td><code>hex 40 10</code></td><td>[TÍCH PHÂN]</td></tr>
+                <tr><td><code>hex 40 02</code></td><td>[X]</td><td><code>hex 20 01</code></td><td>[PHÂN SỐ]</td></tr>
+                <tr><td><code>hex 20 02</code></td><td>[√]</td><td><code>hex 20 04</code></td><td>[x²]</td></tr>
+                <tr><td><code>hex 20 08</code></td><td>[xˆ]</td><td><code>hex 20 10</code></td><td>[log]</td></tr>
+                <tr><td><code>hex 20 20</code></td><td>[ln]</td><td><code>hex 10 01</code></td><td>[(-)]</td></tr>
+                <tr><td><code>hex 10 02</code></td><td>[ĐỘ]</td><td><code>hex 10 04</code></td><td>[x^-1]</td></tr>
+                <tr><td><code>hex 10 08</code></td><td>[SIN]</td><td><code>hex 10 10</code></td><td>[COS]</td></tr>
+                <tr><td><code>hex 10 20</code></td><td>[TAN]</td><td><code>hex 08 01</code></td><td>[STO]</td></tr>
+                <tr><td><code>hex 08 02</code></td><td>[ENG]</td><td><code>hex 08 04</code></td><td>[(]</td></tr>
+                <tr><td><code>hex 08 08</code></td><td>[)]</td><td><code>hex 08 10</code></td><td>[S<=>D]</td></tr>
+                <tr><td><code>hex 08 20</code></td><td>[M+]</td><td><code>hex 04 10</code></td><td>[AC]</td></tr>
+                <tr><td><code>hex 02 10</code></td><td>[÷]</td><td><code>hex 01 10</code></td><td>[-]</td></tr>
+                <tr><td><code>hex 04 40</code></td><td>[x10]</td><td><code>hex 01 40</code></td><td>[=]</td></tr>
+                <tr><td><code>hex 10 40</code></td><td>[0]</td><td><code>hex 01 01</code></td><td>[1]</td></tr>
+                <tr><td><code>hex 01 02</code></td><td>[2]</td><td><code>hex 01 04</code></td><td>[3]</td></tr>
+                <tr><td><code>hex 02 01</code></td><td>[4]</td><td><code>hex 02 02</code></td><td>[5]</td></tr>
+                <tr><td><code>hex 02 04</code></td><td>[6]</td><td><code>hex 04 01</code></td><td>[7]</td></tr>
+                <tr><td><code>hex 04 02</code></td><td>[8]</td><td><code>hex 04 04</code></td><td>[9]</td></tr>
+                <tr><td><code>hex 04 08</code></td><td>[DEL]</td><td><code>hex 02 08</code></td><td>[×]</td></tr>
+                <tr><td><code>hex 01 08</code></td><td>[+]</td><td><code>hex 08 40</code></td><td>[.]</td></tr>
+                <tr><td><code>hex 02 40</code></td><td>[ANS]</td><td></td><td></td></tr>
+            </tbody>
+        </table>
+        <p>Để sử dụng hiệu quả hàm này, cần kết hợp với hàm <code>cmp_ea</code>.</p>
+    </div>
+
+    <div class="function-block" id="p3-9">
+        <h3>3.9. Hàm làm chậm (delay)</h3>
+        <p>Hàm này tạm dừng chương trình trong một khoảng thời gian nhất định. Thời gian trễ phụ thuộc vào giá trị truyền vào er0.</p>
+        <p><strong>Địa chỉ:</strong> <code>09F3C</code></p>
+        <p><strong>Tham số:</strong> er0: giá trị thời gian trễ (2 byte)</p>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>er0 = hex 0x&lt;giá trị&gt;
+delay</code></pre>
+        <p><strong>Ví dụ:</strong> in chữ "LỌ" delay 1 giây tức 8000 tick (0x1f40) rồi in chữ "THÁNH" đè lên chữ "LỌ"</p>
+        <pre><code>org 0xe9e0
+start:
+    buffer_clear
+    setlr
+    setsfr
+print:
+    xr0 = 0x3011 , adr_of text1
+    printline
+    render.ddd4
+    er0 = 0x1f40
+    delay
+    xr0 = 0x3011 , adr_of text2
+    printline
+    render.ddd4
+text1:
+    str "LỌ"
+    0x00
+text2:
+    str "THÁNH"
+    0x00</code></pre>
+        <p><strong>Giải thích:</strong></p>
+        <ul>
+            <li>er0 = 0x1f40 (1 giây). Giá trị càng lớn, thời gian trễ càng lâu.</li>
+            <li>Hàm delay sẽ dừng chương trình trong khoảng thời gian tương ứng, sau đó tiếp tục chạy.</li>
+        </ul>
+        <p><strong>Lưu ý:</strong> Delay thường dùng để tạo hiệu ứng chậm hoặc đồng bộ thời gian.</p>
+    </div>
+
+    <div class="function-block" id="p3-10">
+        <h3>3.10. Các dạng so sánh (verify)</h3>
+        <p>Trong các phần mềm, đôi khi ta không chỉ muốn so sánh bằng mà còn muốn so sánh các điều kiện khác. Khi ấy ta sử dụng các hàm có sẵn từ chế độ verify của máy.</p>
+        <p><strong>Các hàm verify:</strong></p>
+        <ul>
+            <li><code>19536</code> : verify_eq (==)</li>
+            <li><code>195C0</code> : verify_ne (!=)</li>
+            <li><code>19516</code> : verify_gt (>)</li>
+            <li><code>19526</code> : verify_lt (<)</li>
+            <li><code>194F6</code> : verify_ge (>=)</li>
+            <li><code>19506</code> : verify_le (<=)</li>
+        </ul>
+        <p>Các hàm này lần lượt kiểm tra giữa 2 giá trị: bằng nhau, khác nhau, lớn hơn, bé hơn, không bé hơn (lớn hơn hoặc bằng), không lớn hơn (bé hơn hoặc bằng).</p>
+        <p><strong>Cách gọi:</strong></p>
+        <pre><code>xr0 = &lt;địa chỉ 1&gt;, &lt;địa chỉ 2&gt;
+call &lt;verify function&gt;</code></pre>
+        <p><strong>Ví dụ:</strong></p>
+        <pre><code>value_a:
+0x0001
+value_b:
+0x0001
+xr0 = adr_of value_a , xr0 = adr_of value_b
+call 19536 # verify_eq kiểm tra value_a có bằng value_b</code></pre>
+        <p><strong>Kết quả trả về:</strong> er0 = 00 01 và er2 = 01 00 (True), còn nếu value_b là giá trị khác thì sai (False) er0 = er2 = 00 00.<br>
+        Để sử dụng hiệu quả ta nên dùng kết hợp với <code>cmp_ea</code>.</p>
+    </div>
+
+    <!-- PHẦN 4 -->
     <h2 id="phan4">PHẦN 4: KỸ THUẬT XÂY DỰNG CHƯƠNG TRÌNH ROP</h2>
 
-    <h3>4.1 Kỹ thuật vòng lặp (Loop)</h3>
-<pre>loop:
-    qr0 = 0xd62e3030d184d630
-    call 0x203c8                # strcpy
-    sp = er6, pop er8           # gadget 0x21F74</pre>
+    <h3 id="p4-1">4.1. Kỹ thuật xây dựng vòng lặp (loop)</h3>
+    <p>Trong ROP, "loop" không phải là một lệnh có sẵn, mà là kỹ thuật để chương trình chạy lại từ đầu sau khi hoàn thành một lượt. Nếu không có loop, khi chạy hết chương trình sẽ bị treo.<br>
+    Có hai dạng loop phổ biến: loop (dùng QR0 và strcpy) và loop ngắn (dùng memcpy_auto_jmp). Cả hai đều sao chép chương trình từ vùng backup về vùng chạy rồi nhảy về đầu, tạo vòng lặp vô hạn.</p>
 
-    <h3>4.2 Offset – Cách tính địa chỉ chính xác</h3>
-    <div class="important">
-        <strong>Công thức Offset Backup:</strong><br>
-        <code>Địa chỉ Backup = Địa chỉ Runtime + 4784 (tức 0x12B0)</code><br>
-        Cú pháp trong Assembly: <code>adr_of [+4784] bien</code>
+    <h4 id="p4-1-1">4.1.1. Loop – dùng QR0 và strcpy (phổ biến)</h4>
+    <p><strong>Mẫu loop:</strong></p>
+    <pre><code>loop:
+    qr0 = 0xd62e3030d184d630
+    call 0x203c8
+    sp = er6, pop er8</code></pre>
+    <p><strong>Giải thích từng bước:</strong></p>
+    <ol>
+        <li><code>qr0 = 0xd62e3030d184d630</code>
+            <ul>
+                <li>QR0 là thanh ghi 8 byte. 4 byte thấp (XR0) = 0xD184D630, 4 byte cao (XR4) = 0xD62E3030.</li>
+                <li>Kết quả: er0 = 0xD630, er2 = 0xD184.</li>
+            </ul>
+        </li>
+        <li><code>call 0x203c8</code>
+            <ul>
+                <li>Gọi hàm strcpy (hoặc memcpy). Tham số: er0 = đích (0xD630), er2 = nguồn (0xD184).</li>
+                <li>Sao chép toàn bộ dữ liệu từ 0xD184 đến 0xD630, dừng khi gặp 0x00.</li>
+            </ul>
+        </li>
+        <li><code>sp = er6, pop er8</code> (gadget 0x21F74)
+            <ul>
+                <li>Gadget này thực hiện:
+                    <pre><code>mov sp, er6        (SP = er6)
+pop er8            (lấy 2 byte từ SP vào er8, SP tăng 2)
+pop pc             (lấy 2 byte tiếp theo vào PC, SP tăng 2)</code></pre>
+                </li>
+                <li>Ở đây er6 phải được thiết lập trước đó, thường là 0xD62E (0xD630 - 2). Khi đó:
+                    <ul>
+                        <li>SP = 0xD62E</li>
+                        <li>pop er8 → lấy 2 byte rác (0x3030) vào er8, SP = 0xD630</li>
+                        <li>pop pc → lấy 2 byte đầu tiên tại 0xD630 vào PC, đó là lệnh đầu tiên của chương trình vừa được sao chép. Chương trình bắt đầu chạy lại.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <p><strong>Tóm lại:</strong> loop ngắn sao chép chương trình từ 0xD184 → 0xD630, rồi nhảy vào 0xD630. Cách này ngắn gọn, tiết kiệm byte, phù hợp khi chương trình nhỏ.</p>
+
+    <h4 id="p4-1-2">4.1.2. Loop ngắn – dùng memcpy_auto_jmp</h4>
+    <p><strong>Mẫu loop:</strong></p>
+    <pre><code>loop:
+    call 0x2045c     # pop xr4, pop xr12
+    0xd730           # địa chỉ đích (dest)
+    0x01fe           # độ dài chương trình (len)
+    0xe9e0           # địa chỉ nguồn (src)
+    0xd724           # src - 0xC (địa chỉ trả về)
+    call 0x2b2ba     # memcpy_auto_jmp</code></pre>
+    <p><strong>Giải thích từng bước:</strong></p>
+    <ol>
+        <li><code>call 0x2045c</code>
+            <ul>
+                <li>Gadget "pop xr4, pop xr12". Lấy 8 byte từ stack vào xr4 (4 byte) và xr12 (4 byte).</li>
+                <li>Các tham số được đặt ngay sau lệnh call, theo thứ tự: dest, len, src, return_addr.</li>
+            </ul>
+        </li>
+        <li>Các tham số:
+            <ul>
+                <li><code>0xd730</code> : địa chỉ đích (dest). Được nạp vào er4.</li>
+                <li><code>0x01fe</code> : độ dài chương trình (len). Được nạp vào er6 (khoảng 510 bytes).</li>
+                <li><code>0xe9e0</code> : địa chỉ nguồn (src). Được nạp vào er12.</li>
+                <li><code>0xd724</code> : địa chỉ trả về (src - 0xC). Được nạp vào er14.</li>
+            </ul>
+        </li>
+        <li><code>call 0x2b2ba</code> (memcpy_auto_jmp)
+            <ul>
+                <li>Hàm thực hiện memcpy với các tham số:
+                    <pre><code>er4 = dest (0xD730)
+er6 = len  (0x01FE)
+er12 = src  (0xE9E0)
+er14 = return_addr - 0xC (0xD724)</code></pre>
+                </li>
+                <li>Sao chép một khối dữ liệu từ src đến dest với độ dài len.</li>
+                <li>Sau khi sao chép, nó tự động nhảy đến địa chỉ trong er10 (0xD724) để tiếp tục. Đây là cơ chế "auto_jmp", giúp không cần thêm gadget pivot riêng.</li>
+            </ul>
+        </li>
+    </ol>
+    <p><strong>Tóm lại:</strong> loop dài sao chép chương trình từ vùng backup 0xE9E0 (nơi lưu bản sao an toàn) về vùng chạy 0xD730, sau đó nhảy đến 0xD724. Cách này phù hợp khi cần copy toàn bộ chương trình với độ dài xác định, không phụ thuộc vào byte null.</p>
+    
+    <div class="note">
+        <strong>Lưu ý chung cho cả hai dạng:</strong> Vùng backup là 0xE9E0 (cách 0xD730 + 4784 byte), nơi lưu bản sao an toàn.<br>
+        <strong>Q:</strong> Vì sao lại -0xC trong loop ngắn?<br>
+        <strong>A:</strong> Xét disas của memcpy_auto_jmp, ta thấy sau khi cpy xong nó thực hiện B LEAVE tức là vào hàm LEAVE (0AC38). Mà hàm LEAVE đặt sp = er14 (nên từ đầu cho return addr = er14 là như vậy), pop xr4, pop qr8, nên tổng số byte SP tăng là 4 + 8 = 12 (bytes). Vì thế phải -12 để bù vào.<br>
+        <strong>LUÔN DÙNG <code>org 0xd730</code> THAY VÌ <code>org 0xe9e0</code> KHI CÓ LOOP TRONG PROGRAM</strong>
     </div>
 
-    <h3>4.3 Xử lý phím với cmp_ea</h3>
-<pre>setup_key:
+    <h3 id="p4-2">4.2. Offset – Cách tính địa chỉ chính xác</h3>
+    <p>Trong ROP, khi viết chương trình, bạn thường xuyên phải truy cập vào các ô nhớ cụ thể, đặc biệt là các biến trong vùng backup (0xE9E0). Khái niệm offset giúp bạn xác định chính xác vị trí cần truy cập.<br>
+    Offset là khoảng cách (tính bằng byte) từ một địa chỉ cơ sở đến địa chỉ bạn muốn.<br>
+    Trong tài liệu này, ta hay dùng cách viết như <code>adr_of [+4784]</code> để chỉ địa chỉ backup. Bản chất của nó là phép cộng: địa chỉ backup = địa chỉ runtime + 4784.</p>
+    <p>Để hiểu rõ hơn, hãy xét một ví dụ với gadget pop er0:</p>
+    <pre><code>pop er0    # địa chỉ 0x12602, mã hex: 02 26 31 30</code></pre>
+    <p>Khi bạn muốn gọi gadget này trong chương trình, bạn sẽ viết:</p>
+    <pre><code>pop er0    # tương đương với hex: 02 26 31 30</code></pre>
+    <p>Bốn byte này (02 26 31 30) được đặt vào vùng nhớ của chương trình. Nếu bạn muốn lưu dữ liệu ngay sau gadget (ví dụ giá trị 36 67), bạn có thể viết:</p>
+    <pre><code>pop er0        # hex: 02 26 31 30
+hex 36 67      # dữ liệu nằm ngay sau 4 byte của lệnh call</code></pre>
+    <p>Lúc này, trong bộ nhớ runtime (0xD730), các byte được sắp xếp như sau:</p>
+    <pre><code>Địa chỉ 0xD730 : 02 26 31 30 36 67 ...</code></pre>
+    <ul>
+        <li>Nếu bạn trỏ đến địa chỉ 0xD730 (offset +0), đó là byte đầu tiên của lệnh call.</li>
+        <li>Nếu bạn trỏ đến 0xD734 (offset +4), đó là dữ liệu 36 67.</li>
+        <li>Nếu bạn trỏ đến 0xD730 + 4784 (tức 0xE9E0), đó là bản sao của chính 4 byte trên, nhưng nằm ở vùng backup. Lúc này offset +4784 giúp bạn truy cập vào bản sao.</li>
+    </ul>
+    <p><strong>Tại sao phải dùng offset +4784?</strong><br>
+    Như đã giải thích trong phần loop, vùng runtime (0xD730) bị ghi đè mỗi lần chương trình lặp lại. Muốn thay đổi dữ liệu có hiệu lực lâu dài, bạn phải thay đổi chính bản sao trong vùng backup (0xE9E0). Do đó, khi bạn viết:</p>
+    <pre><code>er8 = adr_of [+4784] bien</code></pre>
+    <p>thì er8 sẽ chứa địa chỉ của bien trong vùng backup, không phải runtime.</p>
+    <p><strong>Vì sao lại là 4784?</strong><br>
+    Con số 4784 xuất phát từ khoảng cách giữa địa chỉ runtime 0xD730 và địa chỉ backup 0xE9E0. Cụ thể: <code>0xE9E0 - 0xD730 = 0x12B0 = 4784</code> (thập phân). Vùng backup này được chọn vì nó nằm ngoài vùng bị ghi đè bởi cơ chế loop (0xD184 → 0xD630), do đó các dữ liệu được lưu tại đây sẽ không bị mất sau mỗi lần lặp. Đây là lý do vì sao ta cần dùng offset +4784 khi muốn thay đổi lâu dài.</p>
+    <p><strong>Quy tắc xác định offset:</strong></p>
+    <ul>
+        <li><code>adr_of</code> chỉ một label (ví dụ bien) sẽ cho địa chỉ runtime (0xD730 + khoảng cách từ đầu program).</li>
+        <li><code>adr_of [+4784] bien</code> sẽ cho địa chỉ runtime + 4784, tức là địa chỉ của biến đó trong vùng backup.</li>
+        <li>Trong các gadget có pop er8 hoặc pop pc, địa chỉ nhảy thường phải trừ đi 2 (hoặc 4, 8) để bù cho các pop phía trước. Đó cũng là một dạng offset.</li>
+    </ul>
+    <p><strong>Tóm lại:</strong></p>
+    <ul>
+        <li>Offset là khoảng cách byte giữa các địa chỉ.</li>
+        <li>+4784 là offset chuẩn để chuyển từ vùng runtime sang vùng backup.</li>
+        <li>Khi bạn muốn thay đổi giá trị có tính lâu dài, hãy dùng offset +4784.</li>
+    </ul>
+
+    <h3 id="p4-3">4.3. Tăng/Giảm giá trị của một địa chỉ</h3>
+    <p>Một thao tác rất phổ biến trong ROP là tăng/giảm giá trị tại một địa chỉ.<br>
+    Gadget sử dụng: <code>[er8] += er2, pop xr8, rt</code><br>
+    Địa chỉ: <code>09CA0</code></p>
+    <p><strong>Cách dùng:</strong></p>
+    <pre><code>er8 = địa chỉ cần thay đổi (2 byte)
+er2 = giá trị cần cộng (2 byte, có thể âm dạng bù hai)
+[er8] += er2, pop xr8, rt
+0x30303030          # pad cho pop xr8</code></pre>
+    <p><strong>Giá trị thường dùng:</strong></p>
+    <ul>
+        <li><code>hex 00 01</code> : tăng 1</li>
+        <li><code>hex ff ff</code> : giảm 1 (vì 0xFFFF = -1)</li>
+    </ul>
+    <p><strong>Ví dụ:</strong> tăng giá trị tại 0xE9E0 lên 1</p>
+    <pre><code>er8 = 0xE9E0
+er2 = 0x0001
+[er8] += er2, pop xr8, rt
+0x30303030</code></pre>
+    <p><strong>Giải thích:</strong> Sau <code>[er8] += er2, pop xr8, rt</code>, bộ nhớ tại 0xE9E0 sẽ được cộng thêm 1. Gadget có pop xr8 ở cuối, nên cần 4 byte pad (0x30303030) để tránh ảnh hưởng đến stack. Giá trị pad không quan trọng, miễn là có. Nhưng đôi khi nên tận dụng nó.</p>
+    <p><strong>Lưu ý:</strong></p>
+    <ul>
+        <li>Nếu muốn giảm, dùng er2 = 0xFFFF.</li>
+        <li>Có thể dùng giá trị khác để tăng với số lớn hơn.</li>
+        <li>Để ghi vào vùng backup (lâu dài), dùng địa chỉ có offset +4784. Ví dụ: <code>er8 = adr_of [+4784] gay</code></li>
+    </ul>
+
+    <h4 id="p4-3-1">4.3.1. Scroll – Cuộn màn hình liên tục</h4>
+    <p>Địa chỉ <code>0xF039</code> trong bộ nhớ điều khiển độ cuộn (scroll) của màn hình. Thay đổi giá trị tại đây sẽ làm màn hình cuộn lên/xuống.<br>
+    Để tạo hiệu ứng cuộn liên tục, ta kết hợp:</p>
+    <ul>
+        <li>Kỹ thuật tăng/giảm tại địa chỉ.</li>
+        <li>Hàm delay để điều chỉnh tốc độ.</li>
+        <li>Vòng lặp (loop) để lặp lại.</li>
+    </ul>
+    <p><strong>Mẫu code cuộn lên (tăng giá trị):</strong></p>
+    <pre><code>scroll_up:
+    er8 = 0xF039
+    er2 = 0x0001
+    [er8]+=er2,pop xr8
+    0x30303030            # pad
+    er0 = 0x0500
+    delay                 # delay
+loop:
+    [...]</code></pre>
+    <p><strong>Mẫu code cuộn xuống (giảm giá trị):</strong></p>
+    <pre><code>scroll_down:
+    er8 = 0xF039
+    er2 = 0xFFFF
+    [er8]+=er2,pop xr8
+    0x30303030
+    er0 = 0x0500
+    delay
+loop:
+    [...]</code></pre>
+    <p><strong>Giải thích:</strong> Mỗi bước tăng/giảm 1 đơn vị tại 0xF039, làm màn hình cuộn một lượng nhỏ. Delay giữa các bước để cuộn chậm vừa phải (có thể điều chỉnh giá trị). Loop để tăng/giảm liên tục tạo hiệu ứng cuộn.</p>
+    <p><strong>Lưu ý:</strong> Giá trị tại 0xF039 không nên tăng/giảm quá nhanh (cần delay) để tránh nổ. Nếu cuộn đến giới hạn, giá trị có thể bị tràn.</p>
+
+    <h3 id="p4-4">4.4. Ghi giá trị vào một địa chỉ (set)</h3>
+    <p>Để ghi dữ liệu vào một ô nhớ, ta dùng gadget <code>[er0] = r2</code> (208B2) hoặc <code>[er0] = er2</code> (139D8).</p>
+    <p><strong>Cách dùng với xr0 (ghi 2 byte):</strong></p>
+    <pre><code>xr0 = &lt;địa chỉ đích&gt; , &lt;giá trị&gt; , &lt;pad&gt;
+[er0] = r2</code></pre>
+    <p><strong>Giải thích:</strong></p>
+    <ul>
+        <li>xr0 gồm er0 (2 byte thấp) và er2 (2 byte cao).</li>
+        <li>Khi viết xr0 = addr, value, pad, ta thực chất đang đặt: er0 = addr, r2 = value (byte thấp của er2, vì pad chiếm byte cao).</li>
+        <li>Sau đó gadget <code>[er0] = r2</code> sẽ ghi 1 byte value vào addr.</li>
+        <li>Pad (thường là 30) không ảnh hưởng, chỉ để đủ 4 byte cho xr0.</li>
+    </ul>
+    <p><strong>Ví dụ:</strong> ghi giá trị 0x41 vào địa chỉ 0xE9E0</p>
+    <pre><code>xr0 = 0xE9E0 , 0x41 , 0x30
+[er0] = r2</code></pre>
+    <p>Nếu cần ghi 2 byte, dùng gadget <code>[er0] = er2</code> (139D8) và xr0 = addr, value_high, value_low:</p>
+    <pre><code>xr0 = 0xE9E0 , 0x12 , 0x34
+[er0] = er2      # ghi 0x3412 vào 0xE9E0 (little‑endian)</code></pre>
+    <p><strong>Lưu ý:</strong> Để ghi vào vùng backup (lâu dài), dùng địa chỉ có offset +4784. Ví dụ: <code>xr0 = adr_of [+4784] gay , 0x01 , 0x30</code></p>
+
+    <h3 id="p4-5">4.5. Xử lý phím với getkey và cmp_ea</h3>
+    <p>Để chương trình phản hồi theo phím bấm, ta kết hợp getkey để lấy keycode KI/KO, dùng cmp_ea so sánh với bảng, và nhảy đến nhánh xử lý tương ứng.</p>
+    <p><strong>Cấu trúc chung:</strong></p>
+    <pre><code>setup_key:
     er0 = adr_of key
-    getkey
+    getkey # hoặc các hàm đọc phím khác tuỳ mục đích sử dụng
     setlr
     pop er0
 key:
     hex 00 00
     ea = adr_of table
     cmp_ea
-    er6 = [ea]                  # Gadget 1C64A
-    sp = er6, pop er8           # Gadget 21F74
+    er6 = [ea]          # 1C64A
+    sp = er6, pop er8   # 21F74
+func_1:
+    # xử lý khi nhấn phím 1
+    goto loop
+func_2:
+    # xử lý khi nhấn phím 2
+    goto loop
+# các phím khác
+loop:
+    # loop :)
 table:
-    hex 01 01                   # Phím 1
-    adr_of [-2] func1
-    hex 00 00                   # Mặc định
-    adr_of [-2] loop</pre>
+    0x0101                  # keycode phím 1
+    adr_of [-2] func1       # địa chỉ nhánh (trừ 2 do pop er8)
+    hex 0x0102              # keycode phím 2
+    adr_of [-2] func2
+    # ... các phím khác
+    0x0000                  # kết thúc bảng
+    adr_of [-2] loop        # nhánh mặc định (thường là loop)</code></pre>
+    <p><strong>Giải thích:</strong></p>
+    <ul>
+        <li>getkey đọc phím, lưu KI/KO (2 byte) vào key.</li>
+        <li>pop er0 lấy giá trị key vừa đọc vào er0 (cần thiết vì getkey có thể làm thay đổi er0).</li>
+        <li>cmp_ea so sánh er0 với các mục trong bảng. Nếu tìm thấy, ea trỏ đến địa chỉ nhánh tương ứng (2 byte sau keycode).</li>
+        <li><code>er6 = [ea]</code> lấy địa chỉ nhánh vào er6.</li>
+        <li><code>sp = er6, pop er8</code> (gadget 21F74) thực hiện:
+            <pre><code>mov sp, er6         (đặt SP = er6)
+pop er8             (lấy 2 byte từ SP vào er8, SP tăng 2)
+pop pc             (lấy 2 byte tiếp theo vào PC, SP tăng 2)</code></pre>
+        </li>
+        <li>Do có pop er8 trước, địa chỉ nhảy phải được đặt trừ đi 2 (adr_of [-2]). Như vậy, sau khi pop er8, SP sẽ trỏ đúng đến địa chỉ nhảy và pop pc sẽ nhảy đến đó.</li>
+    </ul>
+    <p><strong>Ví dụ:</strong> ấn 1, 2 để hiện text</p>
+    <pre><code>org 0xd730
+home:
+    setlr
+    setsfr
+    buffer_clear
+setup_key:
+    er0 = adr_of key
+    getkey
+    setlr
+    pop er0
+key:
+    0x0000
+    ea = adr_of table
+    cmp_ea
+    er6 = [ea]
+    sp = er6, pop er8
+print1:
+    xr0 = 0x301a, adr_of text1
+    printline
+    render.ddd4
+    goto loop
+print2:
+    xr0 = 0x301a, adr_of text2
+    printline
+    render.ddd4
+    goto loop
+loop:
+    xr0 = 0xd184d630
+    BL strcpy
+    er14 = 0xd62e
+    sp=er14,pop er14
+table:
+    hex 01 01
+    adr_of [-2] print1
+    hex 01 02
+    adr_of [-2] print2
+    hex 00 00
+    adr_of [-2] loop
+text1:
+    str"11111111111111111"
+text2:
+    str"22222222222222222"</code></pre>
+    <p><strong>Lưu ý:</strong> Bảng phải kết thúc bằng 0x0000 và địa chỉ mặc định. Các nhánh xử lý nên kết thúc bằng goto loop.</p>
 
+    <h3 id="p4-6">4.6. Các dạng so sánh (verify) kết hợp với so sánh bảng (cmp_ea)</h3>
+    <p>Trong các phần mềm, đôi khi ta không chỉ muốn so sánh bằng mà còn muốn so sánh các điều kiện khác. Khi ấy ta sử dụng các hàm có sẵn từ chế độ verify của máy.<br>
+    <strong>Các hàm verify:</strong></p>
+    <ul>
+        <li><code>0x19536</code> : verify_eq (==)</li>
+        <li><code>0x195C0</code> : verify_ne (!=)</li>
+        <li><code>0x19516</code> : verify_gt (>)</li>
+        <li><code>0x19526</code> : verify_lt (<)</li>
+        <li><code>0x194F6</code> : verify_ge (>=)</li>
+        <li><code>0x19506</code> : verify_le (<=)</li>
+    </ul>
+    <p>Các hàm này lần lượt kiểm tra giữa 2 giá trị: bằng nhau, khác nhau, lớn hơn, bé hơn, không bé hơn (lớn hơn hoặc bằng), không lớn hơn (bé hơn hoặc bằng).</p>
+    <p><strong>Cách gọi:</strong></p>
+    <pre><code>xr0 = &lt;địa chỉ 1&gt;, &lt;địa chỉ 2&gt;
+call &lt;verify function&gt;</code></pre>
+    <p><strong>Kết quả trả về:</strong> er0 = hex 00 01 và hex er2 = 01 00 nếu đúng (True), còn sai (False) thì er0 = er2 = 00 00.<br>
+    Từ đấy ta có thể sử dụng cmp_ea để thực hiện các loại so sánh.</p>
+    <p><strong>Chẳng hạn:</strong></p>
+    <pre><code>a:
+    [...]
+b:
+    [...]
+...
+verify:
+    xr0 = adr_of a, adr_of b
+    call 195c0 # verify_ne (!=), kiểm tra xem a!=b hay không.
+    ea = adr_of table
+    cmp_ea
+    er6 = [ea]
+    sp = er6, pop er8
+if_ne:
+    [...]
+else:
+    [...]
+table:
+hex 00 01
+adr_of [-2] if_ne
+hex 00 00
+adr_of [-2] else
+...</code></pre>
+    <p>Cách sử dụng tương tự với các hàm verify khác.</p>
+
+    <!-- PHẦN 5 -->
     <h2 id="phan5">PHẦN 5: CÁC LƯU Ý CẦN NHỚ</h2>
     <ol>
-        <li>Ký hiệu <code>0x</code> ngược lại với <code>hex</code>: <code>hex 00 01 -&gt; 0x0100</code>.</li>
-        <li>Tên label không trùng nhau, không chứa dấu tiếng Việt hay khoảng trắng.</li>
-        <li>Đầu mỗi chương trình luôn có <code>setlr</code>, <code>setsfr</code> và <code>buffer_clear</code>.</li>
-        <li>Thứ tự cấu trúc code: <code>[Mã xử lý] -&gt; loop -&gt; table -&gt; dữ liệu</code>.</li>
-        <li>Khi có loop trong program, khai báo địa chỉ bắt đầu là <code>org 0xd730</code>.</li>
+        <li><code>0x</code> ngược lại với hex : hex <code>00 01</code> -> <code>0x0100</code></li>
+        <li>Khi đặt tên cho label thì không được đặt trùng, và đặt không được có dấu hay dấu cách.</li>
+        <li>Dấu cách lùi đầu dòng trong program là để dễ nhìn, khi compile, tất cả các dấu cách sẽ tự động được xoá.</li>
+        <li>Đầu mỗi program (sau org) thì luôn setlr, setsfr và buffer_clear (nếu cần clear màn).</li>
+        <li>Thứ tự trong program: <code>[các thứ] -> loop -> table -> dữ liệu</code></li>
+        <li>Khi có loop trong program thì địa chỉ program là <code>0xd730</code>.</li>
+        <li>Offset là khoảng cách từ một địa chỉ đến địa chỉ khác. Để thay đổi dữ liệu lâu dài qua các lần loop, cần dùng offset <code>+4784</code> để trỏ vào vùng backup (<code>0xE9E0</code>).</li>
     </ol>
 
-    <div class="footer" id="phan6">
-        <h2>PHẦN 6: KẾT THÚC & LỜI CẢM ƠN</h2>
-        <p>Tài liệu được đúc kết từ quá trình nghiên cứu, tham khảo tài liệu chính thống <em>"nX-U16/100 Core Cẩm nang hướng dẫn"</em> của LAPIS Semiconductor cùng cộng đồng ROP Casio.</p>
-        <p><strong>Biên soạn:</strong> @Bashamee<br>
-        <strong>Đóng góp chính:</strong> @mathfischist_91422, @ahbanh (aka luoi)<br>
-        <strong>Testers:</strong> @phong2k11_4, @itssuperplayz, @hanhdo0230, @dunghackcasio...</p>
-    </div>
+    <!-- PHẦN 6 -->
+    <h2 id="phan6">PHẦN 6: KẾT THÚC</h2>
+    <p>Những kiến thức về thanh ghi, bộ nhớ, các gadget và kỹ thuật xây dựng chương trình trong tài liệu này được đúc kết từ tài nguyên có sẵn, quá trình nghiên cứu, tham khảo tài liệu chính thống <em>"nX-U16/100 Core Cẩm nang hướng dẫn – Vi điều khiển CMOS 16‑bit"</em> của LAPIS Semiconductor, cùng những trải nghiệm thực tế từ cộng đồng.</p>
+    <p>Hy vọng rằng những dòng chữ này sẽ là điểm khởi đầu vững chắc, giúp bạn tự tin tạo ra chương trình riêng trên chiếc máy tính Casio của mình.</p>
+    <p>Đừng ngại thử nghiệm, sai và sửa – đó chính là cách học nhanh nhất.</p>
+    <p>Lời cảm ơn đặc biệt gửi đến tất cả thành viên trong cộng đồng đã chia sẻ, thử nghiệm và đóng góp ý kiến để tài liệu được hoàn thiện hơn. Rất mong nhận được những phản hồi từ bạn để cùng nhau phát triển.</p>
+    <p><strong>Chúc bạn thành công!</strong></p>
 
+    <footer>
+        <p><strong>Tài liệu được biên soạn bởi:</strong> @Bashamee</p>
+        <p><strong>Đóng góp:</strong> @mathfischist_91422 (big contribution), @ahbanh (aka luoi)</p>
+        <p><strong>Tester:</strong> @phong2k11_4, @itssuperplayz (aka Mink), @hanhdo0230, @dunghackcasio, vuhoangquan19112, ...</p>
+        <p><strong>Nguồn tham khảo chính:</strong> nX-U16/100 Core Instruction Manual – LAPIS Semiconductor</p>
+        <p><em>Lần cập nhật cuối: 13:28 29/3/2026</em></p>
+        <h3>HẾT</h3>
+    </footer>
 </div>
 
 </body>
